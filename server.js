@@ -12,6 +12,7 @@ import updateHamster from './routes/updateHamster.js'
 import deleteHamster from './routes/deleteHamster.js'
 import matches from './routes/matches.js'
 import specificMatch from './routes/specificMatch.js'
+import deleteMatches from './routes/deleteMatches.js'
 // const staticFolder = path.join(__dirname, 'public')
 
 
@@ -41,6 +42,7 @@ app.use('/hamsters', updateHamster)
 app.use('/hamsters', deleteHamster)
 app.use('/matches', matches)
 app.use('/matches', specificMatch)
+app.use('/matches', deleteMatches)
 
 
 // Starta server
