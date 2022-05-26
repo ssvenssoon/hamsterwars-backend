@@ -3,49 +3,45 @@
 import express from 'express'
 import cors from 'cors'
 import path from 'path'
+import { fileURLToPath } from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 const app = express()
 const PORT = process.env.PORT || 1177
 import hamsters from './routes/hamsters.js'
-import randomHamster from './routes/randomHamster.js'
-import specificHamster from './routes/specificHamster.js'
-import updateHamster from './routes/updateHamster.js'
-import deleteHamster from './routes/deleteHamster.js'
-import matches from './routes/matches.js'
-import specificMatch from './routes/specificMatch.js'
-import deleteMatches from './routes/deleteMatches.js'
-// const staticFolder = path.join(__dirname, 'public')
+// import matches from './routes/matches.js'
+// import matchWinners from './routes/matchWinners.js'
+// import winners from './routes/winners.js'
+// import losers from './routes/losers.js'
 
+const staticFolder = path.join(__dirname, '/../dist/')
+
+const staticImages = path.join(__dirname, '/public/img/')
 
 // Middleware
 // CORS öppnar vårt projekt så det kan användas från andra domäner
-app.use( cors() )
-
+app.use(cors())
+app.use(express.json())
 // Parse request body
-app.use( express.urlencoded({ extended: true }) )
+app.use(express.urlencoded({ extended: true }))
 
 // Logger - skriv ut information om inkommande request
-app.use( (req, res, next) => {
-	console.log(`Logger: ${req.method}  ${req.url} `, req.body)
-	next()
+app.use((req, res, next) => {
+  console.log(`Logger: ${req.method}  ${req.url} `, req.body)
+  next()
 })
 
 // Serve static files in this folder
-app.use( express.static('public'))
-
-
+app.use(express.static(staticFolder))
+app.use('/img', express.static(staticImages))
 
 // Routes
 app.use('/hamsters', hamsters)
-app.use('/hamsters/random', randomHamster)
-app.use('/hamsters', specificHamster)
-app.use('/hamsters', updateHamster)
-app.use('/hamsters', deleteHamster)
-app.use('/matches', matches)
-app.use('/matches', specificMatch)
-app.use('/matches', deleteMatches)
-
+app.all('*', (req, res) => {
+  res.sendFile(staticFolder + 'index.html')
+})
 
 // Starta server
 app.listen(PORT, () => {
-	console.log(`Server is listening on port ${PORT}.`)
+  console.log(`Server is listening on port ${PORT}.`)
 })
