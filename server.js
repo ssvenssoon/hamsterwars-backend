@@ -14,7 +14,7 @@ import hamsters from './routes/hamsters.js'
 // import winners from './routes/winners.js'
 // import losers from './routes/losers.js'
 
-const staticFolder = path.join(__dirname, '/../dist/')
+const staticFolder = path.join(__dirname, './public/')
 
 const staticImages = path.join(__dirname, '/public/img/')
 
